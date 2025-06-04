@@ -1,0 +1,145 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart & Retina Risk Predictor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.3rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            margin-top: 1.5rem;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        img {
+            margin-top: 1rem;
+            max-width: 100%;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🩺 Cardiovascular Risk & Retina Disease Predictor</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <!-- Basic Info -->
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Phone:</label>
+        <input type="text" name="phone" required>
+
+        <label>Upload Fundus Image:</label>
+        <input type="file" name="image" accept="image/*" onchange="previewImage()" required>
+        <img id="imgPreview" alt="Image Preview"/>
+
+        <!-- Lifestyle Inputs -->
+        <label>Weight (kg):</label>
+        <input type="number" step="any" name="weight" required>
+
+        <label>Height (cm):</label>
+        <input type="number" step="any" name="height" required>
+
+        <label>Smoking (1 = Yes, 0 = No):</label>
+        <input type="number" name="smoking" min="0" max="1" required>
+
+        <label>History of Stroke (1 = Yes, 0 = No):</label>
+        <input type="number" name="stroke" min="0" max="1" required>
+
+        <label>Number of physically unhealthy days in last 30 days (0-30):</label>
+        <input type="number" name="physical_health" min="0" max="30" required>
+
+        <label>Number of mentally unhealthy days in last 30 days (0-30):</label>
+        <input type="number" name="mental_health" min="0" max="30" required>
+
+        <label>Difficulty in Walking (1 = Yes, 0 = No):</label>
+        <input type="number" name="diff_walking" min="0" max="1" required>
+
+        <label>Sex (1 = Male, 0 = Female):</label>
+        <input type="number" name="sex" min="0" max="1" required>
+
+        <label>Age Group (e.g., 18-24:1, 25-29:2, ..., 80+:13):</label>
+        <input type="number" name="age_category" required>
+
+        <label>Race:</label>
+        <p>(0=Other, 1=American Indian/Alaskan Native, 2=Black, 3=Asian, 4=Hispanic, 5=White)</p>
+        <input type="number" name="race" required>
+
+        <label>Diabetic (1 = Yes, 0 = No):</label>
+        <input type="number" name="diabetic" min="0" max="1" required>
+
+        <label>Do you engage in physical activity? (1 = Yes, 0 = No):</label>
+        <input type="number" name="physical_activity" min="0" max="1" required>
+
+        <label>General Health (0=Poor, 1=Fair, 2=Good, 3=Very Good, 4=Excellent):</label>
+        <input type="number" name="general_health" min="1" max="5" required>
+
+        <label>Sleep Time (in hours):</label>
+        <input type="number" step="any" name="sleep_time" required>
+
+        <label>Asthma (1 = Yes, 0 = No):</label>
+        <input type="number" name="asthma" min="0" max="1" required>
+
+        <!-- Hidden or pre-filled placeholders for unused model inputs -->
+        <input type="hidden" name="kidney_disease" value="0">
+        <input type="hidden" name="skin_cancer" value="0">
+
+        <input type="submit" value="Predict Health">
+    </form>
+
+    <script>
+        function previewImage() {
+            const file = document.querySelector('input[type=file]').files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('imgPreview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+</body>
+</html>

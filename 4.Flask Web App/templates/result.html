@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Prediction Result</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #fce4ec);
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .info p {
+      font-size: 1rem;
+      color: #555;
+      margin: 0.5rem 0;
+    }
+
+    .image {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .image img {
+      max-width: 250px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .section {
+      margin-top: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      border-left: 5px solid #42a5f5;
+      padding-left: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+
+    ul li {
+      background: #f4f6f8;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    .risk-score {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #d32f2f;
+      margin-top: 1rem;
+    }
+
+    .prob {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      text-align: center;
+      margin: 1.2rem 0;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(to right, #43cea2, #185a9d);
+      color: white;
+      font-weight: 600;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      margin: 1.5rem auto 0;
+      display: block;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #36d1dc, #5b86e5);
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .image {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="info">
+        <p><strong>👤 Name:</strong> {{ name }}</p>
+        <p><strong>📞 Phone:</strong> {{ phone }}</p>
+        <p><strong>🎂 Age-Category:</strong> {{ 18 + (age|int - 1) * 5 }} - {{ 18 + (age|int) * 5 }}</p>
+        <p><strong>⚧ Gender:</strong> {{'Female' if gender == 1 else 'Male'}}</p>
+      </div>
+      <div class="image">
+        <img src="data:image/png;base64,{{ image }}" alt="Uploaded Fundus Image">
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">📝 Lifestyle Inputs</h3>
+      <ul>
+        <li><strong>Height (in cm):</strong> {{ height }}</li>
+        <li><strong>Weight (in kg):</strong> {{ weight }}</li>
+        <li><strong>Smoking:</strong> {{'Yes' if smoking == 1 else 'No'}}</li>
+        <li><strong>Stroke History:</strong> {{'Yes' if stroke == 1 else 'No'}}</li>
+        <li><strong>Physical Health (days affected):</strong> {{ physical_health }}</li>
+        <li><strong>Mental Health (days affected):</strong> {{ mental_health }}</li>
+        <li><strong>Difficulty Walking:</strong> {{ 'Yes' if diff_walking == 1 else 'No' }}</li>
+        <li><strong>Sex (0 = Female, 1 = Male):</strong> {{ 'Male' if sex == 1 else 'Female'}}</li>
+        <li><strong>Age Category:</strong> {{ 18 + (age|int - 1) * 5 }} - {{ 18 + (age|int) * 5 }}</li>
+        {% set race_map = {
+        0: "Other",
+        1: "American Indian/Alaskan Native",
+        2: "Black",
+        3: "Asian",
+        4: "Hispanic",
+        5: "White"
+        } %}
+
+        <li><strong>Race:</strong> {{ race_map[race|int] }}</li>
+
+        <li><strong>Diabetic Status:</strong> {{'Yes' if diabetic == 1 else 'No'}}</li>
+        <li><strong>Physically Active:</strong> {{'Yes' if physical_activity == 1 else 'No'}}</li>
+        {% set health_labels = {
+        0: "Poor",
+        1: "Fair",
+        2: "Good",
+        3: "Very Good",
+        4: "Excellent"
+        } %}
+
+        <li><strong>General Health (Rating):</strong> {{ health_labels[general_health|int] }}</li>
+
+        <li><strong>Sleep Time (hours/day):</strong> {{ sleep_time }}</li>
+        <li><strong>Asthma:</strong> {{'Yes' if asthma == 1 else 'No'}}</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">🧠 Detected Diseases from Fundus Image</h3>
+      <ul>
+        {% if diseases %}
+        {% for disease in diseases %}
+        <li>🧬 {{ disease_full_names[disease] }}</li>
+        {% endfor %}
+        {% else %}
+        <li>No diseases detected. ✅</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">❤️ Cardiovascular Risk Prediction</h3>
+      <p class="risk-score">Heart Disease Risk(Model1): {{ heart_disease_risk }}</p>
+      <p class="prob">Lifestyle Model Probability: {{ prob2 }} likelihood of heart disease</p>
+      <div class="emoji">{{ combined_result }}</div>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">💡 Personalized Health Insights</h3>
+      {% if insights %}
+      <div
+        style="background-color: #f9f9f9; padding: 0.5rem; border-radius: 10px; white-space: pre-wrap; line-height: 1.6; font-size: 1rem; color: #333;">
+        {{ insights | safe }}
+      </div>
+      {% else %}
+      <p>No personalized insights available at the moment.</p>
+      {% endif %}
+    </div>
+
+    <p style="margin: 8px; border: #d32f2f; border-width: 3px; border-style: solid;"><strong>Disclaimer:</strong> This
+      application is developed as part of an academic project by engineering students and is intended solely for
+      educational and informational purposes. The health predictions and risk assessments provided are generated using
+      machine learning models and are not validated by medical professionals. This tool is not a substitute for
+      professional medical advice, diagnosis, or treatment. Users are strongly encouraged to consult a qualified
+      healthcare provider for any health-related concerns. The creators of this application do not accept responsibility
+      for decisions made based on the information provided herein.</p>
+    <!-- <a href="/download" class="btn">📄 Download PDF Report</a> -->
+  </div>
+
+</body>
+
+</html>

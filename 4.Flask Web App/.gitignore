@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables or secret keys
+.env
+
+# Flask instance folder
+instance/
+
+# Flask default database
+*.sqlite3
+*.db
+
+# Logs and local debug files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Virtual environment
+venv/
+env/
+
+# Jupyter Notebook Checkpoints (if used)
+.ipynb_checkpoints
+
+# IDE configs
+.vscode/
+.idea/
+
+# PDF Reports and uploads
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Cache files
+*.cache
+.cache/
+*.pkl
+*.h5
+
+# Flask test files
+coverage.xml
+htmlcov/
+*.cover
+
+# MacOS metadata
+Icon?
+
+# Node modules (if using JS libraries)
+node_modules/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Compiled JavaScript and sourcemaps
+*.map
