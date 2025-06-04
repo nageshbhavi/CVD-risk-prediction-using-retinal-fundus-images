@@ -1,0 +1,2 @@
+Model1(Retinal Fundus Images) dataset -- https://www.kaggle.com/datasets/andrewmvd/retinal-disease-classification
+model2(Life style factors) dataset -- https://www.kaggle.com/datasets/kamilpytlak/personal-key-indicators-of-heart-disease
